@@ -1,0 +1,33 @@
+{
+  "name": "angular-heatmap",
+  "version": "0.0.1",
+  "authors": [
+    "GabiG <gabrielg@wix.com>"
+  ],
+  "description": "Pure Angular heatmap directive for displaying a range of values",
+  "main": "dist/angular-heatmap.min.js",
+  "keywords": [
+    "angular",
+    "directive",
+    "heatmap",
+    "heat",
+    "map"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.3.0",
+    "bootstrap": "~3.2.0",
+    "jquery": "~2.1.1",
+    "angular-bootstrap": "~0.11.2"
+  }
+}

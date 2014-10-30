@@ -1,0 +1,96 @@
+<html>
+<head>
+  <title>Angular Heatmap Demo</title>
+
+<style>
+  .demo-container{
+    padding:50px;
+  }
+  .heatmap-container{
+    margin-bottom: 10px;
+  }
+</style>
+
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="../dist/angular-heatmap.css">
+</head>
+<body ng-app="demo">
+  <div ng-controller="DemoCtrl" class="demo-container">
+    <ul>
+      <li ng-repeat="c in colors"><input type="text" ng-model="colors[$index]"/>
+       <button ng-click="colors.splice($index,1)">X</button>
+     </li>
+     <li><input type="text" ng-model="newColor">
+      <button ng-click="colors.push(newColor);newColor=''">add</button></li>
+    </ul>
+    <button ng-click="goCrazy()">Go Crazy</button>
+    <button ng-click="goCrazier()">Go Crazy 2</button>
+    <input type="number" ng-model="model.rows"/>
+    <input type="number" ng-model="model.cols"/>
+    <input type="number" ng-model="model.min"/>
+    <input type="number" ng-model="model.max" tooltip="'test'"/>
+    <div class="container">
+    <div class="row">
+      <div class="col-sm-3"><heatmap matrix="matrix" colors="colors"></heatmap></div>
+      <div class="col-sm-3"><heatmap matrix="matrix" colors="colors"></heatmap></div>
+      <div class="col-sm-3"><heatmap matrix="matrix" colors="colors"></heatmap></div>
+      <div class="col-sm-3"><heatmap matrix="matrix" colors="colors"></heatmap></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <heatmap matrix="matrix" colors="colors"></heatmap>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4"><heatmap matrix="matrix" colors="colors"></heatmap></div>
+      <div class="col-sm-4"><heatmap matrix="matrix" colors="colors"></heatmap></div>
+      <div class="col-sm-4"><heatmap matrix="matrix" colors="colors"></heatmap></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6"><heatmap matrix="matrix" colors="colors"></heatmap></div>
+      <div class="col-sm-6"><heatmap matrix="matrix" colors="colors"></heatmap></div>
+    </div>
+
+  </div>
+</body>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components//angular-bootstrap/ui-bootstrap.js"></script>
+<script src="bower_components//angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="../dist/angular-heatmap.js"></script>
+<script src="//localhost:30000/livereload.js"></script>
+
+<script>
+  angular.module('demo', ['gg.heatmap', 'ui.bootstrap'])
+  .controller('DemoCtrl', function ($scope, HeatmapHelper, $interval) {
+    var model = $scope.model = {
+      min: -5,
+      max: 5,
+      rows: 7,
+      cols: 12
+    };
+    $scope.bob = 'Bobitoggdfgdfgg'
+    $scope.$watch('model', function () {
+      $scope.matrix = HeatmapHelper.randomData(model.rows, model.cols, model.min, model.max);
+      $scope.matrix[0][0] = null;
+    }, true);
+    $scope.colors = angular.copy(HeatmapHelper.defaultColors);
+    $scope.goCrazy = function () {
+      var cubes = $('.heatmap-cube');
+      setInterval(function () {
+        var cube =  $(cubes[Math.random() * cubes.length | 1]).addClass('flip');
+        setTimeout(function () {
+          cube.removeClass('flip');
+        }, Math.random() * 5000 + 1500);
+      }, 10);
+    }
+
+    $scope.goCrazier = function () {
+      $interval(function () {
+        $scope.matrix = HeatmapHelper.randomData(model.rows, model.cols, model.min, model.max);
+      }, 1000);
+    }
+  });
+</script>
+</html>

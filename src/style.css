@@ -1,0 +1,51 @@
+.heatmap-cube{
+      position:absolute;
+      display:inline-block;
+      font-color: #333;
+      text-align: center;
+      transition: 0.6s;
+      transition: background-color 0.1s, transform 0.2s, color: 0.1s, border-color: 0.1s;
+      /*tgransform-style: preserve-3d;    */
+      transform: rotateY(180deg);
+      vertical-align:middle;
+      color: transparent;
+            -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      gbox-sizing: content-box;
+      border: 1px solid transparent;
+    }
+
+    .heatmap-cube span{
+        vertical-align:middle;
+        display:inline-block;
+        /*font-size:16px*/;
+            -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      cursor: default;
+    }
+
+    .heatmap-cube[value="0"]{
+      background-color: #ddd !important;
+    }
+
+    .heatmap-cube:hover, .heatmap-cube.flip{
+      background-color: #ddd !important;
+      transform: rotateY(0deg);
+      color: #333;
+      border-color: #ccc;
+    }
+  .heatmap-container{
+    position:relative;
+    width:100%;
+  }
+  .heatmap-resizing{
+    opacity: 0.2;
+  }
