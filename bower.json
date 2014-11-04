@@ -1,9 +1,11 @@
 {
   "name": "angular-heatmap",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "authors": [
-    "GabiG <gabrielg@wix.com>"
+    "GabiGrin <gabi.grinberg@gmail.com>"
   ],
+  "main": "dist/angular-heatmap.js",
+  "repository": "git@github.com:GabiGrin/angular-heatmap.git",
   "description": "Pure Angular heatmap directive for displaying a range of values",
   "main": "dist/angular-heatmap.min.js",
   "keywords": [

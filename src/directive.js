@@ -3,6 +3,7 @@ angular.module('gg.heatmap')
 .directive('heatmap', function (HeatmapHelper, $window, $timeout) {
   return {
     template: '<div class="heatmap-container"></div>',
+    restrict: 'EA',
     replace: true,
     scope: {
       zeroColor: '@',
