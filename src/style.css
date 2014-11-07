@@ -49,3 +49,28 @@
   .heatmap-resizing{
     opacity: 0.2;
   }
+
+  .heatmap-matrix-container{
+    position: absolute;
+  }
+
+  .heatmap-labels{
+    position: absolute;
+    text-align: center;
+  }
+  .heatmap-label{
+    position: absolute;
+    text-align: center;
+    font-size: 10px;
+  }
+  .heatmap-label .label-value{
+    display: inline-block;
+  }
+  .heatmap-label.label-row{
+    width: 100%;
+    left: 0;
+  }
+  .heatmap-label.label-column{
+    height: 100%;
+    top: 0;
+  }

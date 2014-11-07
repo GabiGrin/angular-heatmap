@@ -47,13 +47,173 @@ describe('Service', function () {
 
   it('should render a map cube', function () {
     var cube1 = HeatmapHelper.createCube(15, '#0044ff', 50, {top: 10, left: 20}),
-        cube2 = HeatmapHelper.createCube(20, '#202020', {width: 20, height: 30}, {top: 10, left: 20});
+    cube2 = HeatmapHelper.createCube(20, '#202020', {width: 20, height: 30}, {top: 10, left: 20});
 
     expect(cube1.css('width')).toBe('50px');
     expect(cube1.css('height')).toBe('50px');
     expect(cube2.css('width')).toBe('20px');
     expect(cube2.css('height')).toBe('30px');
     expect(cube1.attr('value')).toBe('15');
+  });
+
+  it('calculates the size of the cube correctly when it is given', function (){
+    var elemWidth = 100;
+    var givenOptions = {cellSize: 25};
+    var options = HeatmapHelper.getOptions(givenOptions);
+    var size = HeatmapHelper.calculateCubeSize(elemWidth, 10, options);
+
+    expect(size).toEqual({width:25, height:25});
+
+    givenOptions = {cellSize: {width: 40, height: 35}};
+    options = HeatmapHelper.getOptions(givenOptions);
+    size = HeatmapHelper.calculateCubeSize(elemWidth, 10, options);
+
+    expect(size).toEqual({width:40, height:35});
+  });
+
+  it('should calculate the size of the matrix container', function(){
+    expect(HeatmapHelper.calculateMatrixContainerSize(10, 10, {width: 20, height: 20}, 1))
+      .toEqual({width: 209, height: 209});
+
+  expect(HeatmapHelper.calculateMatrixContainerSize(5, 15, {width: 10, height: 20}, 1))
+      .toEqual({width: 54, height: 314});
+
+  });
+
+  it('creates a matrix container', function() {
+    var container1 = HeatmapHelper.createMatrixContainer(100,200);
+    expect(container1.css('width')).toBe('100px');
+    expect(container1.css('height')).toBe('200px');
+  });
+
+  it('renders a matrix container', function(){
+    var matrix1 = [[1, 2, 3], [4, 6, 7]];
+    var matrix2 = [[1, 2], [2, 5], [4, 6]];
+    var matrix3 = [[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3], [4 ,4 ,4 ,4]];
+    var colors = ['red', 'yellow'];
+    var slots = colors.length;
+    var margin = 2;
+
+    var cubeSize1 = {width: 10, height: 10};
+    var cubeSize2 = {width: 5, height: 10};
+    var cubeSize3 = {width: 20, height: 10};
+
+    var rendered1 = HeatmapHelper.renderMatrixContainer(colors, slots, matrix1, cubeSize1, margin);
+    var rendered2 = HeatmapHelper.renderMatrixContainer(colors, slots, matrix2, cubeSize2, margin);
+    var rendered3 = HeatmapHelper.renderMatrixContainer(colors, slots, matrix3 , cubeSize3, margin);
+
+    expect(rendered1.children().length).toBe(6);
+    expect(rendered2.children().length).toBe(6);
+    expect(rendered3.children().length).toBe(16);
+
+  });
+
+
+  it('should calculate the size of the cube', function (){
+    var elemWidth = 400;
+    var givenOptions = {margin: 0};
+    var options = HeatmapHelper.getOptions(givenOptions);
+    var size = HeatmapHelper.calculateCubeSize(elemWidth, 10, options);
+
+    expect(size).toEqual({width:40, height:40});
+
+    givenOptions = {margin: 1};
+    options = HeatmapHelper.getOptions(givenOptions);
+    size = HeatmapHelper.calculateCubeSize(elemWidth, 10, options);
+
+    expect(size).toEqual({width:39, height: 39});
+
+    givenOptions = {margin: 2};
+    options = HeatmapHelper.getOptions(givenOptions);
+    size = HeatmapHelper.calculateCubeSize(elemWidth, 10, options);
+
+    expect(size).toEqual({width:38, height: 38});
+
+
+    givenOptions = {margin: 2, heightRatio: 0.5};
+    options = HeatmapHelper.getOptions(givenOptions);
+    size = HeatmapHelper.calculateCubeSize(elemWidth, 10, options);
+
+    expect(size).toEqual({width:38, height: 19});
+  });
+
+
+
+  it('should create column labels container', function (){
+    var labels = [];
+    var givenOptions = {};
+    var labelsContainer = HeatmapHelper.createColsLabels(labels, 100, 20, HeatmapHelper.getOptions(givenOptions));
+
+    expect(labelsContainer.children().length).toBe(0);
+    expect(labelsContainer.css('height')).toBe('');
+    expect(labelsContainer.css('top')).toBe('');
+    expect(labelsContainer.css('left')).toBe('');
+
+
+    labels = ['a', 'b', 'c', 'd'];
+    labelsContainer = HeatmapHelper.createColsLabels(labels, 100, 20, HeatmapHelper.getOptions(givenOptions));
+    expect(labelsContainer.css('height')).toBe('20px');
+    expect(labelsContainer.css('left')).toBe('20px');
+
+    labelsContainer = HeatmapHelper.createColsLabels(labels, 100, 0, HeatmapHelper.getOptions(givenOptions));
+    expect(labelsContainer.css('left')).toBe('0px');
+  });
+
+  it('should create children column labels', function (){
+    var labels = [];
+    var givenOptions = {};
+    var labelsContainer = HeatmapHelper.createColsLabels(labels, 100, 20, HeatmapHelper.getOptions(givenOptions));
+    expect(labelsContainer.children().length).toBe(0);
+
+    labels = ['a', 'b', 'c', 'd'];
+    labelsContainer = HeatmapHelper.createColsLabels(labels, 100, 20, HeatmapHelper.getOptions(givenOptions));
+    expect(labelsContainer.children().length).toBe(4);
+
+    angular.forEach(labelsContainer.children(), function(child, idx){
+      var elem = angular.element(child);
+      expect(elem.css('width')).toBe('25px');
+      expect(elem.text()).toBe(labels[idx]);
+      expect(elem.css('left')).toBe(idx * 25 + 'px');
+    });
+  });
+
+    it('should create rows labels container', function (){
+    var labels = [];
+    var givenOptions = {};
+    var options = HeatmapHelper.getOptions(givenOptions);
+    var labelsContainer = HeatmapHelper.createRowsLabels(labels, 100, 20, HeatmapHelper.getOptions(givenOptions));
+
+    expect(labelsContainer.children().length).toBe(0);
+    expect(labelsContainer.css('width')).toBe('');
+    expect(labelsContainer.css('top')).toBe('');
+    expect(labelsContainer.css('left')).toBe('');
+
+
+    labels = ['a', 'b', 'c', 'd'];
+    labelsContainer = HeatmapHelper.createRowsLabels(labels, 100, 20, HeatmapHelper.getOptions(givenOptions));
+    expect(labelsContainer.css('width')).toBe(options.labelsContainerSize.rows + 'px');
+    expect(labelsContainer.css('top')).toBe(options.labelsContainerSize.cols + 'px');
+
+    labelsContainer = HeatmapHelper.createRowsLabels(labels, 100, 0, HeatmapHelper.getOptions(givenOptions));
+    expect(labelsContainer.css('top')).toBe('0px');
+  });
+
+  it('should create children column labels', function (){
+    var labels = [];
+    var givenOptions = {};
+    var labelsContainer = HeatmapHelper.createRowsLabels(labels, 100, 20, HeatmapHelper.getOptions(givenOptions));
+    expect(labelsContainer.children().length).toBe(0);
+
+    labels = ['a', 'b', 'c', 'd'];
+    labelsContainer = HeatmapHelper.createRowsLabels(labels, 100, 20, HeatmapHelper.getOptions(givenOptions));
+    expect(labelsContainer.children().length).toBe(4);
+
+    angular.forEach(labelsContainer.children(), function(child, idx){
+      var elem = angular.element(child);
+      expect(elem.css('height')).toBe('25px');
+      expect(elem.text()).toBe(labels[idx]);
+      expect(elem.css('top')).toBe(idx * 25 + 'px');
+    });
   });
 
 });

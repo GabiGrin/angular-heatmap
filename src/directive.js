@@ -8,7 +8,10 @@ angular.module('gg.heatmap')
     scope: {
       zeroColor: '@',
       colors: '=',
-      matrix: '='
+      matrix: '=',
+      colLabels: '=',
+      rowLabels: '=',
+      options: '='
     },
     link: function (scope, elem) {
       var drawTimeout = null,
@@ -19,7 +22,7 @@ angular.module('gg.heatmap')
         elem.addClass('heatmap-resizing');
         drawTimeout = $timeout(function () {
           console.log('Drawing');
-          HeatmapHelper.renderMap(elem, scope.matrix, scope.colors, scope.colors.length);
+          HeatmapHelper.renderMap(elem, scope.matrix, scope.colors, scope.colors.length, scope.colLabels || [], scope.rowLabels || [], scope.options);
           elem.removeClass('heatmap-resizing');
         }, drawDelay);
       }

@@ -2,17 +2,17 @@
 <head>
   <title>Angular Heatmap Demo</title>
 
-<style>
-  .demo-container{
-    padding:50px;
-  }
-  .heatmap-container{
-    margin-bottom: 10px;
-  }
-</style>
+  <style>
+    .demo-container{
+      padding:50px;
+    }
+    .heatmap-container{
+      margin-bottom: 10px;
+    }
+  </style>
 
-<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-<link rel="stylesheet" href="../dist/angular-heatmap.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="../dist/angular-heatmap.css">
 </head>
 <body ng-app="demo">
   <div ng-controller="DemoCtrl" class="demo-container">
@@ -30,51 +30,70 @@
     <input type="number" ng-model="model.min"/>
     <input type="number" ng-model="model.max" tooltip="'test'"/>
     <div class="container">
-    <div class="row">
-      <div class="col-sm-3"><heatmap matrix="matrix" colors="colors"></heatmap></div>
-      <div class="col-sm-3"><heatmap matrix="matrix" colors="colors"></heatmap></div>
-      <div class="col-sm-3"><heatmap matrix="matrix" colors="colors"></heatmap></div>
-      <div class="col-sm-3"><heatmap matrix="matrix" colors="colors"></heatmap></div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <heatmap matrix="matrix" colors="colors"></heatmap>
+      <div class="row">
+        <div class="col-sm-3"><heatmap matrix="matrix"  col-labels ="colors" colors="colors" options="{heightRatio: 1.5}"></heatmap></div>
+        <div class="col-sm-3"><heatmap options="{cubeSize:10}" matrix="matrix" colors="colors" col-labels="colors" row-labels="colors"></heatmap></div>
+        <div class="col-sm-3"><heatmap matrix="matrix" colors="colors"></heatmap></div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-4"><heatmap matrix="matrix" colors="colors"></heatmap></div>
-      <div class="col-sm-4"><heatmap matrix="matrix" colors="colors"></heatmap></div>
-      <div class="col-sm-4"><heatmap matrix="matrix" colors="colors"></heatmap></div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6"><heatmap matrix="matrix" colors="colors"></heatmap></div>
-      <div class="col-sm-6"><heatmap matrix="matrix" colors="colors"></heatmap></div>
-    </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <heatmap matrix="matrix" colors="colors" options="{margin:3, heightRatio: 0.8, cellSize:{width:40,height:10}}" row-labels="['Hello', 'World','Sun','Moon','Fuck','Tard', 'Lol']" col-labels="['Bob','Bob','Bob','Bob','Bob','Bob','Bob','Bob','Bob','Bob','Bob','Bob']"></heatmap>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4"><heatmap matrix="matrix" colors="colors"></heatmap></div>
+        <div class="col-sm-4"><heatmap matrix="matrix" colors="colors"></heatmap></div>
+        <div class="col-sm-4"><heatmap matrix="matrix" colors="colors"></heatmap></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6"><heatmap matrix="matrix" colors="colors"></heatmap></div>
+        <div class="col-sm-6"><heatmap matrix="matrix" colors="colors"></heatmap></div>
+      </div>
 
-  </div>
-</body>
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="bower_components/angular/angular.min.js"></script>
-<script src="bower_components//angular-bootstrap/ui-bootstrap.js"></script>
-<script src="bower_components//angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script src="../dist/angular-heatmap.js"></script>
-<script src="//localhost:30000/livereload.js"></script>
+    </div>
+  </body>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components//angular-bootstrap/ui-bootstrap.js"></script>
+  <script src="bower_components//angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="../dist/angular-heatmap.js"></script>
+  <script src="//localhost:30000/livereload.js"></script>
 
-<script>
-  angular.module('demo', ['gg.heatmap', 'ui.bootstrap'])
-  .controller('DemoCtrl', function ($scope, HeatmapHelper, $interval) {
-    var model = $scope.model = {
-      min: -5,
-      max: 5,
-      rows: 7,
-      cols: 12
-    };
-    $scope.bob = 'Bobitoggdfgdfgg'
-    $scope.$watch('model', function () {
-      $scope.matrix = HeatmapHelper.randomData(model.rows, model.cols, model.min, model.max);
-      $scope.matrix[0][0] = null;
-    }, true);
+  <script>
+    angular.module('demo', ['gg.heatmap', 'ui.bootstrap'])
+    .controller('DemoCtrl', function ($scope, HeatmapHelper, $interval) {
+      var model = $scope.model = {
+        min: -5,
+        max: 5,
+        rows: 7,
+        cols: 12
+      };
+      $scope.$watch('model', function () {
+        $scope.matrix = HeatmapHelper.randomData(model.rows, model.cols, model.min, model.max);
+        $scope.matrix[0][0] = null;
+      }, true);
+
+      var baseColor = ['#F56991'][0];
+      var count = 5;
+
+      function shadeColor2(color, percent) {   
+        var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
+        return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
+      }
+
+      function shadeColor1(color, percent) {  
+    var num = parseInt(color.slice(1),16), amt = Math.round(2.55 * percent), R = (num >> 16) + amt, G = (num >> 8 & 0x00FF) + amt, B = (num & 0x0000FF) + amt;
+    return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (G<255?G<1?0:G:255)*0x100 + (B<255?B<1?0:B:255)).toString(16).slice(1);
+}
+
+      $scope.colors = [];
+      for (var i = 0;i < count; i++) {
+        $scope.colors.push(shadeColor1(baseColor, 100 - (100 / count) * i));
+      }
+
+
+    //$scope.colors = ['#D1F2A5', '#EFFAB4', '#FFC48C', '#FF9F80', '#F56991'];
     $scope.colors = angular.copy(HeatmapHelper.defaultColors);
     $scope.goCrazy = function () {
       var cubes = $('.heatmap-cube');
