@@ -52,7 +52,7 @@ angular.module('gg.heatmap')
     height: null,
     heightRatio: 1,
     cellSize: null,
-    margin: 2,
+    margin: 4,
     tooltipDelay: 500,
     labelsFontSize: {
       rows: 12,
@@ -259,6 +259,7 @@ angular.module('gg.heatmap')
     var container = this.createMatrixContainer(containerSize.width, containerSize.height);
     var _this = this;
     var ranges = _this.createRangesArray(matrix, slots + 1);
+    var tooltipErrorShown = false;
 
     container.css('fontSize', this.calcualteFontSize(cellSize));
 
@@ -276,9 +277,11 @@ angular.module('gg.heatmap')
         cube.addClass('heatmap-range-' + slot);
         if (tooltip) {
           try {
-            $(cube).tooltip({container: 'body'});
+            $(cube).tooltip({container: 'body', delay: {show: defaultOptions.tooltipDelay}});
           } catch (e) {
-            console.error('jquery and bootstrap.js are required to display tooltips!');
+            if (!tooltipErrorShown) {
+              console.error('jquery and bootstrap.js are required to display tooltips!');
+            }
           }
         }
         container.append(cube);
@@ -296,6 +299,7 @@ angular.module('gg.heatmap')
     var containerWidth = elem.width();
     var rows = matrix[0].length;
     var margin = options.margin;
+    console.log('margin', margin);
     var cellSize = _this.calculateCubeSize(elem.width() - rowLabelsWidth, rows, options);
     var renderedMatrix = _this.renderMatrixContainer(colors, slots, matrix, cellSize, margin);
     var height = getHeight(renderedMatrix) + colLabelsHeight;
@@ -316,5 +320,5 @@ angular.module('gg.heatmap')
   }
 
 };
-  };
+};
 });

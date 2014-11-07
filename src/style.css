@@ -63,9 +63,14 @@
     text-align: center;
     font-size: 10px;
   }
+
   .heatmap-label .label-value{
     display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
   }
+  
   .heatmap-label.label-row{
     width: 100%;
     left: 0;
