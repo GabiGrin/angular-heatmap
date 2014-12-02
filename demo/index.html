@@ -30,7 +30,9 @@
     <input type="number" ng-model="model.min"/>
     <input type="number" ng-model="model.max" tooltip="'test'"/>
     <div class="container">
-      <div class="row">
+    <heatmap matrix="matrix" colors="colors" options="{response:false, margin:3}"></heatmap>
+
+<!--       <div class="row">
         <div class="col-sm-3"><heatmap matrix="matrix"  col-labels ="colors" colors="colors" options="{heightRatio: 1.5}"></heatmap></div>
         <div class="col-sm-3"><heatmap options="{cubeSize:10}" matrix="matrix" colors="colors" col-labels="colors" row-labels="colors"></heatmap></div>
         <div class="col-sm-3"><heatmap matrix="matrix" colors="colors"></heatmap></div>
@@ -49,7 +51,7 @@
         <div class="col-sm-6"><heatmap matrix="matrix" colors="colors"></heatmap></div>
         <div class="col-sm-6"><heatmap matrix="matrix" colors="colors"></heatmap></div>
       </div>
-
+ -->
     </div>
   </body>
   <script src="bower_components/jquery/dist/jquery.min.js"></script>

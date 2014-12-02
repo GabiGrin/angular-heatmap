@@ -17,7 +17,9 @@ angular.module('gg.heatmap')
     },
     link: function (scope, elem) {
       var drawTimeout = null,
-          drawDelay = HeatmapHelper.drawDelay;
+      drawDelay = HeatmapHelper.drawDelay,
+      options = HeatmapHelper.getOptions(scope.options);
+
       function draw() {
         //to avoid multiple draws, we'll alaways make sure no changes we're made within 300 ms until redrawing
         $timeout.cancel(drawTimeout);
@@ -36,9 +38,11 @@ angular.module('gg.heatmap')
         draw();
       }, true);
 
-      angular.element($window).bind('resize', function () {
-        scope.$apply(draw);
-      });
+      if (options.response){
+        angular.element($window).bind('resize', function () {
+          scope.$apply(draw);
+        });
+      }
 
     }
   };
@@ -50,7 +54,7 @@ angular.module('gg.heatmap')
   var defaultOptions = {
     width: null,
     height: null,
-    heightRatio: 1,
+    heightRatio: 0.8,
     cellSize: null,
     margin: 4,
     tooltipDelay: 500,
@@ -61,7 +65,8 @@ angular.module('gg.heatmap')
     labelsContainerSize: {
       rows: 50,
       cols: 20
-    }
+    },
+    responsive: true
   };
 
   function _getMeasure(elm, measure) {

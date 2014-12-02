@@ -12,7 +12,7 @@
     },
     dist: {
           // the files to concatenate
-          src: ['src/**/module.js', 'src/**/*.js'],
+          src: ['src/**/module.js', 'src/heatmap/**/*.js'],
           // the location of the resulting JS file
           dest: 'dist/angular-heatmap.js'
         }
@@ -24,7 +24,7 @@
         options:{
           jshintrc:true
         },
-        all: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js']
+        all: ['Gruntfile.js', 'src/**/module.js', 'src/heatmap/*.js', 'test/**/*.js']
       },
       watch: {
        options: {

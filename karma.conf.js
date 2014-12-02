@@ -17,7 +17,9 @@ module.exports = function(config) {
     files: [
     'demo/bower_components/angular/angular.js',
     'demo/bower_components/angular-mocks/angular-mocks.js',
-    'dist/**/*.js',
+    // 'dist/**/*.js',
+    'src/module.js',
+    'src/**/*.js',
     'test/**/*.js'
     ],
 
@@ -30,13 +32,14 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+        'src/**/*.js': ['coverage']
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'notify'],
+    reporters: ['progress', 'coverage', 'notify'],
 
 
     // web server port

@@ -1,4 +1,9 @@
 'use strict';
+
+function toInt(num){
+  return parseInt(num, 10);
+}
+
 describe('Service', function () {
   var HeatmapHelper;
   var m1 = [[1, 2], [3, 4]],
@@ -115,19 +120,19 @@ describe('Service', function () {
     var options = HeatmapHelper.getOptions(givenOptions);
     var size = HeatmapHelper.calculateCubeSize(elemWidth, 10, options);
 
-    expect(size).toEqual({width:40, height:40});
+    expect(size).toEqual({width:40, height: toInt(40 * options.heightRatio)});
 
     givenOptions = {margin: 1};
     options = HeatmapHelper.getOptions(givenOptions);
     size = HeatmapHelper.calculateCubeSize(elemWidth, 10, options);
 
-    expect(size).toEqual({width:39, height: 39});
+    expect(size).toEqual({width:39, height:  toInt(39 * options.heightRatio)});
 
     givenOptions = {margin: 2};
     options = HeatmapHelper.getOptions(givenOptions);
     size = HeatmapHelper.calculateCubeSize(elemWidth, 10, options);
 
-    expect(size).toEqual({width:38, height: 38});
+    expect(size).toEqual({width:38, height: toInt(38 * options.heightRatio)});
 
 
     givenOptions = {margin: 2, heightRatio: 0.5};

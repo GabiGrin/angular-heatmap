@@ -23,6 +23,7 @@
     "jshint-growl-reporter": "^0.1.1",
     "karma": "^0.12.24",
     "karma-chrome-launcher": "^0.1.5",
+    "karma-coverage": "^0.2.6",
     "karma-jasmine": "^0.1.5",
     "karma-notify-reporter": "^0.1.1",
     "karma-osx-reporter": "^0.1.0",

@@ -15,7 +15,9 @@ angular.module('gg.heatmap')
     },
     link: function (scope, elem) {
       var drawTimeout = null,
-          drawDelay = HeatmapHelper.drawDelay;
+      drawDelay = HeatmapHelper.drawDelay,
+      options = HeatmapHelper.getOptions(scope.options);
+
       function draw() {
         //to avoid multiple draws, we'll alaways make sure no changes we're made within 300 ms until redrawing
         $timeout.cancel(drawTimeout);
@@ -34,9 +36,11 @@ angular.module('gg.heatmap')
         draw();
       }, true);
 
-      angular.element($window).bind('resize', function () {
-        scope.$apply(draw);
-      });
+      if (options.response){
+        angular.element($window).bind('resize', function () {
+          scope.$apply(draw);
+        });
+      }
 
     }
   };

@@ -5,7 +5,7 @@ angular.module('gg.heatmap')
   var defaultOptions = {
     width: null,
     height: null,
-    heightRatio: 1,
+    heightRatio: 0.8,
     cellSize: null,
     margin: 4,
     tooltipDelay: 500,
@@ -16,7 +16,8 @@ angular.module('gg.heatmap')
     labelsContainerSize: {
       rows: 50,
       cols: 20
-    }
+    },
+    responsive: true
   };
 
   function _getMeasure(elm, measure) {
