@@ -89,7 +89,7 @@ angular.module('gg.heatmap')
   this.$get = function () {
     return {
       drawDelay: 1,
-      cubeTemplate: '<div class="heatmap-cube" style="width: $width$;height: $height$;top: $top$; left:$left$; background-color:$color$" value="$value$" title="$tooltip$"><span style="line-height:$height$">$value$</span></div>',
+      cubeTemplate: '<div class="heatmap-cube-container" style="width: $width$;height: $height$;top: $top$; left:$left$;" ><div class="heatmap-cube" style="background-color:$color$" value="$value$" title="$tooltip$"><span style="line-height:$height$">$value$</span></div></div>',
       defaultZeroColor: '#fffff',
       defaultColors: ['#a4fba6', '#4ae54a', '#30cb00', '#0f9200', '#006203'],
       randomData: function (rows, cols, min, max) {

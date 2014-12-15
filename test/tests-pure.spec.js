@@ -51,14 +51,17 @@ describe('Service', function () {
   });
 
   it('should render a map cube', function () {
-    var cube1 = HeatmapHelper.createCube(15, '#0044ff', 50, {top: 10, left: 20}),
-    cube2 = HeatmapHelper.createCube(20, '#202020', {width: 20, height: 30}, {top: 10, left: 20});
+    var cube1Container = HeatmapHelper.createCube(15, '#0044ff', 50, {top: 10, left: 20}),
+    cube2Container = HeatmapHelper.createCube(20, '#202020', {width: 20, height: 30}, {top: 10, left: 20});
 
-    expect(cube1.css('width')).toBe('50px');
-    expect(cube1.css('height')).toBe('50px');
-    expect(cube2.css('width')).toBe('20px');
-    expect(cube2.css('height')).toBe('30px');
-    expect(cube1.attr('value')).toBe('15');
+    var cube1 = cube1Container.find('div');
+    var cube2 = cube2Container.find('div');
+
+    expect(cube1Container.css('width')).toBe('50px');
+    expect(cube1Container.css('height')).toBe('50px');
+    expect(cube2Container.css('width')).toBe('20px');
+    expect(cube2Container.css('height')).toBe('30px');
+    expect(cube1Container.find('div').attr('value')).toBe('15');
   });
 
   it('calculates the size of the cube correctly when it is given', function (){
